@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -31,10 +32,23 @@ class _ExcerciseScreenState extends State<ExcerciseDetailScreen> {
 
   late Future<ExcerciseDetail> future;
 
+  var TimerVal = 5;
+
   @override
   void initState() {
     super.initState();
     future = fetchExcerciseDetail();
+    timerFun();
+  }
+  timerFun() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        TimerVal = TimerVal - 1;
+      });
+      if(TimerVal == 0) {
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -55,6 +69,7 @@ class _ExcerciseScreenState extends State<ExcerciseDetailScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
+                    Text('$TimerVal'),
                     SizedBox(height: 10,),
                     Text('${value!.id}',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
